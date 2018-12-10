@@ -1,0 +1,219 @@
+(***********************************************************************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used on any computer system with Mathematica 4.0,
+MathReader 4.0, or any compatible application. The data for the notebook 
+starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do one of 
+the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing the 
+word CacheID, otherwise Mathematica-compatible applications may try to 
+use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+***********************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      8065,        176]*)
+(*NotebookOutlinePosition[      8719,        199]*)
+(*  CellTagsIndexPosition[      8675,        195]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(FEM[a_, b_, n_, m_] := 
+      Module[{}, \[IndentingNewLine]h = 
+          2/\((n - 1)\); \[IndentingNewLine]p[t_] = 
+          Input["\<Func.p[t] in variable t\>"]; \[IndentingNewLine]q[t_] = 
+          Input["\<Func.q[t] in variable t\>"]; \[IndentingNewLine]f[t_] = 
+          Input["\<Func.f[t] in variable t\>"]; \[IndentingNewLine]For[i = 1, 
+          i \[LessEqual] m*n - \((m - 1)\), \(i++\), 
+          z[i_] := \ a + \((i - 
+                    1)\)*\((b - a)\)/\((m*n - m)\)]; \[IndentingNewLine]For[
+          i = 1, i \[LessEqual] n, \(i++\), 
+          x[i_] := \ \(-1\) + \((i - 1)\)*h]; \[IndentingNewLine]For[\ j = 1, 
+          j \[LessEqual] n, \(j++\), 
+          For[\ i = 1, i \[LessEqual] n, \(i++\), 
+            lhs[i] := Sum[\[Alpha][
+                    c]*\(\[Product]\+\(l = 1\)\%c x[i]\)\ , {c, 0, n - 1}]; 
+            If[i \[Equal] j, rhs[i] := 1\ , 
+              rhs[i] := 0\ ]]; \[IndentingNewLine]s1 = 
+            Table[lhs[i] == rhs[i], {i, 1, n}]; \[IndentingNewLine]s2 = 
+            Table[\[Alpha][i], {i, 0, n - 1}]; \[IndentingNewLine]s3 = 
+            Solve[s1, 
+              s2]; \[IndentingNewLine]\(sfun[
+                j]\)[\[Xi]] = \[Sum]\+\(i = 0\)\%\(n - 1\)s3[\([1, i + 1, 
+                    2]\)]*\[Xi]^
+                  i;\[IndentingNewLine]]; \[IndentingNewLine]j = 
+          0; \[IndentingNewLine]For[l = 1, 
+          l \[LessEqual] m*n - m + 1, \(l++\), F[l] = 0; 
+          For[c = 1, c \[LessEqual] m*n - m + 1, \(c++\), 
+            K[l, c] = 0]]; \[IndentingNewLine]For[i = 1, 
+          i \[LessEqual] m, \(i++\), 
+          y[\[Xi]] = \[Sum]\+\(l = 1\)\%n\((z[l + j]*\(sfun[l]\)[\[Xi]])\); 
+          dx\[Xi][\[Xi]] = D[y[\[Xi]], \[Xi]]; 
+          d\[Xi]x[\[Xi]] = 1/dx\[Xi][\[Xi]]; \[IndentingNewLine]For[l = 1, 
+            l \[LessEqual] n, \(l++\), 
+            If[l \[Equal] 1, 
+              F[l + j] = 
+                F[l + j] + \[Integral]\_\(-1\)\%1\((f[
+                            y[\[Xi]]]*\(sfun[l]\)[\[Xi]]*
+                          dx\[Xi][\[Xi]])\) \[DifferentialD]\[Xi] - 
+                  p[z[1 + j]]*du[z[1 + j]], 
+              If[l \[Equal] n, 
+                F[l + j] = 
+                  F[l + j] + \[Integral]\_\(-1\)\%1\((f[
+                              y[\[Xi]]]*\(sfun[l]\)[\[Xi]]*
+                            dx\[Xi][\[Xi]])\) \[DifferentialD]\[Xi] + 
+                    p[z[n + j]]*du[z[n + j]]\ ], 
+              F[l + j] = 
+                F[l + j] + \[Integral]\_\(-1\)\%1\((f[
+                            y[\[Xi]]]*\(sfun[l]\)[\[Xi]]*
+                          dx\[Xi][\[Xi]])\) \[DifferentialD]\[Xi]]; 
+            For[c = 1, c \[LessEqual] n, \(c++\), 
+              K[l + j, c + j] = 
+                K[l + j, 
+                    c + j] + \[Integral]\_\(-1\)\%1\((p[y[\[Xi]]]*
+                          D[\(sfun[l]\)[\[Xi]], \[Xi]]*
+                          D[\(sfun[c]\)[\[Xi]], \[Xi]]*
+                          d\[Xi]x[\[Xi]])\) \[DifferentialD]\[Xi]\  + \ \
+\[Integral]\_\(-1\)\%1\((q[y[\[Xi]]]*\(sfun[l]\)[\[Xi]]*\(sfun[c]\)[\[Xi]]*
+                          dx\[Xi][\[Xi]])\) \[DifferentialD]\[Xi]\ \ ]\ \ ]; \
+\[IndentingNewLine]j = j + n - 1;\[IndentingNewLine]]; \[IndentingNewLine]g = 
+          Input["\<input \n 1 for both essential b.c.\n 2 for first condition \
+suppresible\n 3 for last condition suppresible\n 4 for both Suppresible \
+b.c.\>"]; \[IndentingNewLine]Print["\< x         u   \>"]\ ; \
+\[IndentingNewLine]If[g \[Equal] 1, u[a] = Input["\<u[a]\>"]; 
+          u[b] = Input["\<u[b]\>"]; \[IndentingNewLine]s3 = 
+            LinearSolve[
+              Table[K[i, j] // N, {i, 2, m*n - m}, {j, 2, m*n - m}], 
+              Table[\((F[i] - u[a]*K[i, 1] - u[b]*K[i, m*n - m + 1])\) // 
+                  N, {i, 2, m*n - m}]]; \[IndentingNewLine]For[i = 2, 
+            i \[LessEqual] m*n - m, \(i++\), 
+            Print[z[i] // N, "\<      \>", 
+              s3[\([i - 1]\)]]\ ], \[IndentingNewLine]If[g \[Equal] 2, 
+            u[a] = Input["\<u[a]\>"]; \[Beta] = 
+              Input["\<u'[b]\>"]; \[IndentingNewLine]s3 = 
+              LinearSolve[
+                Table[K[i, j] // N, {i, 2, m*n - m + 1}, {j, 2, 
+                    m*n - m + 1}], 
+                Table[\((\((F[i] /. du[b] \[Rule] \[Beta])\) - 
+                        u[a]*K[i, 1])\) // N, {i, 2, 
+                    m*n - m + 1}]]; \[IndentingNewLine]For[i = 2, 
+              i \[LessEqual] m*n - m + 1, \(i++\), 
+              Print[z[i] // N, "\<      \>", 
+                s3[\([i - 1]\)]]\ ], \[IndentingNewLine]If[g \[Equal] 3, 
+              u[b] = Input["\<u[b]\>"]; \[Beta] = 
+                Input["\<u'[a]\>"]; \[IndentingNewLine]s3 = 
+                LinearSolve[
+                  Table[K[i, j] // N, {i, 1, m*n - m}, {j, 1, m*n - m}], 
+                  Table[\((\((F[i] /. du[a] \[Rule] \[Beta])\) - 
+                          u[b]*K[i, m*n - m + 1])\) // N, {i, 1, 
+                      m*n - m}]]; \[IndentingNewLine]For[i = 1, 
+                i \[LessEqual] m*n - m, \(i++\), 
+                Print[z[i] // N, "\<      \>", 
+                  s3[\([i]\)]]\ ], \[IndentingNewLine]If[
+                g \[Equal] 4, \[Beta] = Input["\<u'[a]\>"]; \[Gamma] = 
+                  Input["\<u'[b]\>"]; \[IndentingNewLine]s3 = 
+                  LinearSolve[
+                    Table[K[i, j] // N, {i, 1, m*n - m + 1}, {j, 1, 
+                        m*n - m + 1}], 
+                    Table[F[i] /. {du[a] \[Rule] \[Beta], 
+                            du[b] \[Rule] \[Gamma]} // N, {i, 1, 
+                        m*n - m + 1}]]; \[IndentingNewLine]For[i = 1, 
+                  i \[LessEqual] m*n - m + 1, \(i++\), 
+                  Print[z[i] // N, "\<      \>", 
+                    s3[\([i]\)]\ ]\ \ ];\ ]\ ]\ ]\ ];\[IndentingNewLine]]\)], \
+"Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FEM[1, 7/4, 2, 3]\)], "Input"],
+
+Cell[BoxData[
+    \(" x         u   "\)], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(1.25`\[InvisibleSpace]"      \
+"\[InvisibleSpace]1.34085314695845`\),
+      SequenceForm[ 1.25, "      ", 1.3408531469584499],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(1.5`\[InvisibleSpace]"      \
+"\[InvisibleSpace]1.6791104410448254`\),
+      SequenceForm[ 1.5, "      ", 1.6791104410448254],
+      Editable->False]], "Print"]
+}, Open  ]]
+},
+FrontEndVersion->"4.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowSize->{1016, 651},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+
+(***********************************************************************
+Cached data follows.  If you edit this Notebook file directly, not using
+Mathematica, you must remove the line containing CacheID at the top of 
+the file.  The cache data will then be recreated when you save this file 
+from within Mathematica.
+***********************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1717, 49, 5802, 104, 1035, "Input"],
+
+Cell[CellGroupData[{
+Cell[7544, 157, 50, 1, 30, "Input"],
+Cell[7597, 160, 50, 1, 25, "Print"],
+Cell[7650, 163, 198, 4, 25, "Print"],
+Cell[7851, 169, 198, 4, 25, "Print"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+
+(***********************************************************************
+End of Mathematica Notebook file.
+***********************************************************************)
+

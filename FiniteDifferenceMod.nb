@@ -1,0 +1,1446 @@
+(************** Content-type: application/mathematica **************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     44240,       1308]*)
+(*NotebookOutlinePosition[     44997,       1334]*)
+(*  CellTagsIndexPosition[     44953,       1330]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["Module for the Finite Difference Method for Boundary \
+Value Problems",
+  FontFamily->"New Century Schlbk",
+  FontSize->14,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0, 0, 1]]], "Text"],
+
+Cell[TextData[{
+  StyleBox["Numerical Methods using ",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox["Mathematica",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontSlant->"Italic",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox[" ",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox[" ",
+    FontSize->14],
+  StyleBox["\n",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0.250004, 0.250004]],
+  StyleBox["Complementary software supplements for  ",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0.996109, 0]],
+  StyleBox[" \n",
+    FontSize->14],
+  StyleBox[ButtonBox["Numerical Methods textbooks",
+    ButtonData:>{
+      URL[ "http://math.fullerton.edu/mathews/numerical.html"], None},
+    ButtonStyle->"Hyperlink"],
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["  ",
+    FontSize->14],
+  StyleBox["\n",
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0.250004, 0.250004]],
+  StyleBox[ButtonBox["John H. Mathews and Kurtis Fink, 2004",
+    ButtonData:>{
+      URL[ "http://www.ecs.fullerton.edu/~mathews/numerical.html"], None},
+    ButtonStyle->"Hyperlink"],
+    FontSize->14,
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["  ",
+    FontSize->14,
+    FontColor->RGBColor[0.500008, 0, 0.996109]]
+}], "Text"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Background\n\nTheorem  (Boundary Value Problem).",
+    FontFamily->"Times New Roman",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox["  Assume that  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(f \((t, x, y)\)\)]],
+  StyleBox["  is continuous on the region  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      RowBox[{
+        StyleBox["R",
+          FontWeight->"Bold",
+          FontSlant->"Italic"], 
+        StyleBox[" ",
+          FontWeight->"Bold",
+          FontSlant->"Italic"], 
+        "=", \({\((t, x, y)\) : 
+            a \[LessEqual] t \[LessEqual] b, \(-\[Infinity]\) < 
+            x < \[Infinity], \(-\[Infinity]\) < y < \[Infinity]}\)}]]],
+  "  and  that  ",
+  Cell[BoxData[
+      \(\[PartialD]f\/\[PartialD]x\  = \ \(f\_x\) \((t, x, y)\)\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(\[PartialD]f\/\[PartialD]y\  = \ \(f\_y\) \((t, x, y)\)\)]],
+  "  are continuous on  ",
+  Cell[BoxData[
+      StyleBox["R",
+        FontWeight->"Bold",
+        FontSlant->"Italic"]]],
+  ".  ",
+  StyleBox["If there exists a constant  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(M > 0\)]],
+  "  for which  ",
+  Cell[BoxData[
+      RowBox[{\(f\_x\), "  ", 
+        StyleBox["and",
+          FontFamily->"Times New Roman"], "  ", \(f\_y\)}]]],
+  "  satisfy\n\n\t",
+  Cell[BoxData[
+      RowBox[{
+        RowBox[{\(\(f\_x\) \((t, x, y)\)\), ">", 
+          RowBox[{"0", "   ", 
+            StyleBox["for",
+              FontFamily->"Times New Roman"], 
+            StyleBox[" ",
+              FontFamily->"Times New Roman"], 
+            StyleBox["all",
+              FontFamily->"Times New Roman"], "  ", \((t, x, y)\)}]}], 
+        "\[Element]", 
+        StyleBox["R",
+          FontWeight->"Bold",
+          FontSlant->"Italic"]}]]],
+  "  ",
+  StyleBox["\nand\n\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      RowBox[{"|", \(\(f\_y\) \((t, x, y)\)\), "|", 
+        RowBox[{
+          RowBox[{"<", " ", 
+            RowBox[{"M", "   ", 
+              StyleBox["for",
+                FontFamily->"Times New Roman"], 
+              StyleBox[" ",
+                FontFamily->"Times New Roman"], 
+              StyleBox["all",
+                FontFamily->"Times New Roman"], "  ", \((t, x, y)\)}]}], 
+          "\[Element]", 
+          StyleBox["R",
+            FontWeight->"Bold",
+            FontSlant->"Italic"]}]}]]],
+  ",  ",
+  StyleBox["\n",
+    FontFamily->"Times New Roman"],
+  StyleBox["\n",
+    FontFamily->"Times New Roman",
+    FontSize->9],
+  StyleBox["then the ",
+    FontFamily->"Times New Roman"],
+  StyleBox["boundary value problem",
+    FontFamily->"Times New Roman",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox[" \n\n\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x'' = f \((t, x, x')\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      RowBox[{\(x \((a)\)\), "=", 
+        RowBox[{
+          RowBox[{"\[Alpha]", "  ", 
+            StyleBox["and",
+              FontFamily->"Times New Roman"], "  ", "x", \((b)\)}], "=", 
+          "\[Beta]"}]}]]],
+  "  ",
+  StyleBox["\n",
+    FontFamily->"Times New Roman"],
+  StyleBox["\n",
+    FontFamily->"Times New Roman",
+    FontSize->9],
+  StyleBox["has a unique solution   ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      RowBox[{"x", "=", 
+        RowBox[{
+          RowBox[{"x", \((t)\), "   ", 
+            StyleBox["for",
+              FontFamily->"Times New Roman"], "   ", "a"}], "\[LessEqual]", 
+          "t", "\[LessEqual]", "b"}]}]]],
+  StyleBox[".  ",
+    FontFamily->"Times New Roman"]
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["\tThe notation  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(y = x' \((t)\)\)]],
+  StyleBox["  has been used to distinguish the third variable of the function\
+\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(f \((t, x, x')\)\)]],
+  StyleBox[".   Finally, the special case of linear differential equations is \
+worthy of mention.",
+    FontFamily->"Times New Roman"]
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Corollary (Linear Boundary Value Problem).",
+    FontFamily->"Times New Roman",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox["  Assume that  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(f \((t, x, y)\)\)]],
+  StyleBox["  in the theorem has the form  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(f \((t, x, y)\)\  = \ p \((t)\) y + q \((t)\) x\  + \ r \((t)\)\)]],
+  StyleBox["  and that  f  and its partial derivatives",
+    FontFamily->"Times New Roman"],
+  "  ",
+  Cell[BoxData[
+      \(\[PartialD]f\/\[PartialD]x\  = \ q \((t)\)\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(\[PartialD]f\/\[PartialD]y\  = \ p \((t)\)\)]],
+  " ",
+  StyleBox[" are continuous on",
+    FontFamily->"Times New Roman"],
+  "  ",
+  Cell[BoxData[
+      StyleBox["R",
+        FontWeight->"Bold",
+        FontSlant->"Italic"]]],
+  ".  ",
+  StyleBox["If there exists a constant  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(M > 0\)]],
+  StyleBox["  for which  p(t)  and   q(t)  satisfy\n",
+    FontFamily->"Times New Roman"],
+  StyleBox["\n",
+    FontFamily->"Times New Roman",
+    FontSize->9],
+  "\t",
+  Cell[BoxData[
+      RowBox[{
+        RowBox[{\(q \((t)\)\), ">", 
+          RowBox[{"0", "   ", 
+            StyleBox["for",
+              FontFamily->"Times New Roman"], 
+            StyleBox[" ",
+              FontFamily->"Times New Roman"], 
+            StyleBox["all",
+              FontFamily->"Times New Roman"], "  ", "t"}]}], 
+        "\[Element]", \([a, b]\)}]]],
+  "  ",
+  StyleBox["\nand\n\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(\(\(|\)\(p \((t)\)\)\(|\)\(\(<\)\(\ \)\(M\)\)\)\ \  = \ \ max\+\(a\  \
+\[LessEqual] \ t\  \[LessEqual] \ b\){\(|\)\(p \((t)\)\)\(|\)}\)]],
+  ",  ",
+  StyleBox["\n",
+    FontFamily->"Times New Roman"],
+  StyleBox["\n",
+    FontFamily->"Times New Roman",
+    FontSize->9],
+  StyleBox["then the ",
+    FontFamily->"Times New Roman"],
+  StyleBox["linear boundary value problem",
+    FontFamily->"Times New Roman",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox[" \n\n\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x'' = p \((t)\) x' \((t)\) + q \((t)\) x \((t)\) + r \((t)\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      RowBox[{\(x \((a)\)\), "=", 
+        RowBox[{
+          RowBox[{"\[Alpha]", "  ", 
+            StyleBox["and",
+              FontFamily->"Times New Roman"], "  ", "x", \((b)\)}], "=", 
+          "\[Beta]"}]}]]],
+  "  ",
+  StyleBox["\n",
+    FontFamily->"Times New Roman"],
+  StyleBox["\n",
+    FontFamily->"Times New Roman",
+    FontSize->9],
+  StyleBox["has a unique solution   ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      RowBox[{"x", "=", 
+        RowBox[{
+          RowBox[{"x", \((t)\), "   ", 
+            StyleBox["over",
+              FontFamily->"Times New Roman"], "   ", "a"}], "\[LessEqual]", 
+          "t", "\[LessEqual]", "b"}]}]]],
+  StyleBox[".  ",
+    FontFamily->"Times New Roman"]
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Finite-Difference Method",
+    FontFamily->"Times New Roman",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0, 0, 1]],
+  StyleBox["\n\n\t",
+    FontFamily->"Times New Roman",
+    FontWeight->"Bold"],
+  StyleBox["Methods involving difference quotient approximations for \
+derivatives can be used for solving certain second-order boundary value \
+problems.  Consider the linear equation\n\t\n(1)",
+    FontFamily->"Times New Roman"],
+  StyleBox["\t\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x'' = p \((t)\) x' \((t)\) + q \((t)\) x \((t)\) + r \((t)\)\)]],
+  "  \n\nover  ",
+  StyleBox["[a,b]",
+    FontFamily->"Courier New"],
+  "  with  ",
+  Cell[BoxData[
+      RowBox[{\(x \((a)\)\), "=", 
+        RowBox[{
+          RowBox[{"\[Alpha]", "  ", 
+            StyleBox["and",
+              FontFamily->"Times New Roman"], "  ", "x", \((b)\)}], "=", 
+          "\[Beta]"}]}]]],
+  ".  ",
+  StyleBox["Form a partition of [",
+    FontFamily->"Times New Roman"],
+  StyleBox["a, b",
+    FontFamily->"Times New Roman",
+    FontSlant->"Italic"],
+  StyleBox["] using the points  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(a = \(\(t\_0 < t\_1 <  ... \) < t\_n = b\)\)]],
+  StyleBox[",  where  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(h = \(b - a\)\/n\)]],
+  StyleBox["  and ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(t\_j\  = \ a\  + \ j\ h\)]],
+  "  for  ",
+  Cell[BoxData[
+      RowBox[{\(j = 0\), 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], "1", 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], "2", 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], "...", 
+        StyleBox[",",
+          FontFamily->"Times New Roman"], "n"}]]],
+  ".  ",
+  StyleBox["The central-difference formulas discussed in Chapter 6 are used \
+to approximate the derivatives  \n\n(2)\t\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x' \((t\_j)\)\  = \ \(x \((t\_\(j + 1\))\) - x \((t\_\(j - 1\))\)\)\/\
+\(2  h\)\  + \ O \((h\^2)\)\)]],
+  StyleBox["\n\nand\n\n(3)\t\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x'' \((t\_j)\)\  = \ \(x \((t\_\(j + 1\))\) - 2  x \((t\_j)\) + x \
+\((t\_\(j - 1\))\)\)\/h\^2\  + \ O \((h\^2)\)\)]],
+  "\n"
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Use the notation ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x\_j\)]],
+  StyleBox[" for the terms ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x \((t\_j)\)\)]],
+  StyleBox[" ",
+    FontFamily->"Times New Roman",
+    FontSlant->"Italic"],
+  StyleBox["on the right side of (2) and (3) and drop the two terms ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(O \((h\^2)\)\)]],
+  ".  Also, use the notations  ",
+  Cell[BoxData[
+      \(p\_j\  = \ p \((t\_j)\)\)]],
+  ",    ",
+  Cell[BoxData[
+      \(q\_j\  = \ q \((t\_j)\)\)]],
+  ",  and  ",
+  Cell[BoxData[
+      \(r\_j\  = \ r \((t\_j)\)\)]],
+  " ",
+  StyleBox["this produces the difference equation \n\n\t\t",
+    FontFamily->"Times-Roman"],
+  Cell[BoxData[
+      \(\(x\_\(j + 1\) - 2  x\_j + x\_\(j - 1\)\)\/h\^2\  = \ \(p\_j\) \
+\(x\_\(j + 1\) - x\_\(j - 1\)\)\/\(2  h\)\  + \ \(q\_j\) x\_j\  + \ r\_j\)]],
+  "\n\n",
+  StyleBox["which is used to compute numerical approximations to the \
+differential equation (1).  This is carried out by multiplying each side  by \
+",
+    FontFamily->"Times-Roman"],
+  Cell[BoxData[
+      \(h\^2\)]],
+  StyleBox[" and then collecting terms involving  ",
+    FontFamily->"Times-Roman"],
+  Cell[BoxData[
+      RowBox[{\(x\_\(j - 1\)\), 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], \(x\_j\), 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], 
+        RowBox[{
+          StyleBox["and",
+            FontFamily->"Times New Roman",
+            FontSize->12,
+            FontWeight->"Plain",
+            FontSlant->"Plain",
+            FontColor->GrayLevel[0],
+            FontVariations->{"Underline"->False,
+            "StrikeThrough"->False}], 
+          StyleBox["  ",
+            FontFamily->"Times New Roman",
+            FontSize->12,
+            FontWeight->"Plain",
+            FontSlant->"Plain",
+            FontColor->GrayLevel[0],
+            FontVariations->{"Underline"->False,
+            "StrikeThrough"->False}], \(x\_\(j + 1\)\)}]}]]],
+  StyleBox["  and arranging them in a system of linear equations:",
+    FontFamily->"Times-Roman"],
+  StyleBox["\n\n\t\t",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(\((\(\(-h\)\/2\) p\_j - 1)\) x\_\(j - 1\) + \((2 + \(h\^2\) q\_j)\) 
+            x\_j + \((\(h\/2\) p\_j - 1)\) x\_\(j + 1\)\  = \ \(-\ h\^2\) 
+          r\_j\)]],
+  "  \n\n",
+  StyleBox["for",
+    FontFamily->"Times New Roman"],
+  "  ",
+  Cell[BoxData[
+      RowBox[{\(j = 1\), 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], "2", 
+        StyleBox[",",
+          FontFamily->"Times New Roman",
+          FontSize->12,
+          FontWeight->"Plain",
+          FontSlant->"Plain",
+          FontColor->GrayLevel[0],
+          FontVariations->{"Underline"->False,
+          "StrikeThrough"->False}], "...", 
+        StyleBox[",",
+          FontFamily->"Times New Roman"], \(n - 1\)}]]],
+  StyleBox[" , where ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x\_0 = \[Beta]\)]],
+  StyleBox[" ",
+    FontFamily->"Times New Roman",
+    FontSlant->"Italic"],
+  StyleBox["and  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x\_n = \[Beta]\)]],
+  StyleBox[" ",
+    FontFamily->"Times New Roman",
+    FontSlant->"Italic"],
+  StyleBox[". This system has the familiar tridiagonal form.",
+    FontFamily->"Times New Roman"]
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Proof  ",
+    FontFamily->"New Century Schlbk",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 1]],
+  StyleBox[ButtonBox["Finite Difference Method for ODE's",
+    ButtonData:>{
+      URL[ 
+      "http://www.ecs.fullerton.edu/~mathews/n2003/FiniteDifferenceProof.\
+html"], None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  ",
+  StyleBox[ButtonBox["Finite Difference Method for ODE's",
+    ButtonData:>{
+      URL[ 
+      "http://math.fullerton.edu/mathews/n2003/FiniteDifferenceProof.html"], 
+      None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  "  "
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Footnote. The significance of the theory.",
+    FontFamily->"Times New Roman",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.996109, 0, 0.996109]],
+  StyleBox["  \n\n\tWe are all familiar with the differential equation  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(x'' = \(-\ x\) \((t)\)\)]],
+  " and its general solution  ",
+  Cell[BoxData[
+      \(x \((t)\) = c\_1\ cos \((t)\) + c\_2\ sin \((t)\)\)]],
+  ".\nThe boundary conditions with  ",
+  Cell[BoxData[
+      RowBox[{\(x \((0)\)\), "=", 
+        RowBox[{
+          RowBox[{"\[Alpha]", "  ", 
+            StyleBox["and",
+              FontFamily->"Times New Roman"], "  ", "x", \((\[Pi])\)}], "=", 
+          "\[Beta]"}]}]]],
+  "  can only be solved if  ",
+  Cell[BoxData[
+      \(\[Alpha] = \[Beta]\)]],
+  ".  Unfortunately, because of this counter example, the \"theory\" which \
+\"guarantees\" a solution must be phrased with \"",
+  Cell[BoxData[
+      RowBox[{
+        RowBox[{\(q \((t)\)\), ">", 
+          RowBox[{"0", "   ", 
+            StyleBox["for",
+              FontFamily->"Times New Roman"], 
+            StyleBox[" ",
+              FontFamily->"Times New Roman"], 
+            StyleBox["all",
+              FontFamily->"Times New Roman"], "  ", "t"}]}], 
+        "\[Element]", \([a, b]\)}]]],
+  ".\"  A careful reading of the \"theory\" reveals that this is a sufficient \
+condition and not a necessary condition.  Indeed there are many problems that \
+can be solved with the \"shooting method\" , all we ask is to be cautious \
+with its implementation and take note that it might not apply sometimes.    "
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Computer Programs  ",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox[ButtonBox["Finite Difference Method for ODE's",
+    ButtonData:>{
+      URL[ 
+      "http://www.ecs.fullerton.edu/~mathews/n2003/FiniteDifferenceProg.html"]\
+, None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  ",
+  StyleBox[ButtonBox["Finite Difference Method for ODE's",
+    ButtonData:>{
+      URL[ 
+      "http://math.fullerton.edu/mathews/n2003/FiniteDifferenceProg.html"], 
+      None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  "  "
+}], "Text"],
+
+Cell[TextData[{
+  StyleBox["Program ",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["(Finite-Difference Method).",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["  ",
+    FontWeight->"Bold"],
+  "To approximate the solution of the boundary value problem  ",
+  Cell[BoxData[
+      \(\(\(\ \)\(x''\  = \ 
+        p \((t)\)\ x' \((t)\) + \ q \((t)\) x \((t)\) + r \((t)\)\)\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      \(x \((a)\) = \[Alpha]\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(x \((b)\) = \[Beta]\)]],
+  "  over the interval  ",
+  Cell[BoxData[
+      \(\([a, b]\)\)]],
+  "  by using the finite difference method of order  ",
+  Cell[BoxData[
+      RowBox[{
+        StyleBox["O",
+          FontWeight->"Bold"], \((h\^2)\)}]]],
+  ". ",
+  StyleBox["The mesh we use is  ",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \(a = \(\(t\_1 < t\_2 <  ... \) < t\_\(n + 1\) = b\)\)]],
+  StyleBox["  and the solution points are",
+    FontFamily->"Times New Roman"],
+  Cell[BoxData[
+      \({\((t\_j, x\_j)\)}\_\(j = 1\)\%\(n + 1\)\)]],
+  StyleBox[".  \n",
+    FontFamily->"Times New Roman"],
+  StyleBox["Procedures.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  "   \n",
+  StyleBox["(i)   ",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["Construct the tri-diagonal matrix and vector.",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["\n(ii)  ",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["Solve the system in (i).",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["\n(iii) ",
+    FontWeight->"Bold",
+    FontColor->RGBColor[0.500008, 0, 0.996109]],
+  StyleBox["Join the mesh points and vector from (ii) to form the solution \
+points.",
+    FontColor->RGBColor[0.500008, 0, 0.996109]]
+}], "Text"],
+
+Cell[BoxData[
+    \(\(\(CoeffMat[a0_, b0_, \[Alpha]0_, \[Beta]0_, 
+        n_]\)\(:=\)\(\[IndentingNewLine]\)\(Module[{a = a0, 
+          b = b0, \[Alpha] = \[Alpha]0, \[Beta] = \[Beta]0, h, 
+          j}, \[IndentingNewLine]h\  = \ \(b\  - \ a\)\/n; \ \
+\[IndentingNewLine]Vt\  = \ 
+          Table[\ a + h\ j, \ {j, 
+              n - 1}\ ]; \ \[IndentingNewLine]Va\  = \ \(Vc\  = \ 
+            Table[\ 0, \ {n - 
+                  2}\ ]\); \ \[IndentingNewLine]Vd\  = \ \(Vb\  = \ 
+            Table[\ 0, \ {n - 1}\ ]\); \ \[IndentingNewLine]For[\ j = 1, \ 
+          j \[LessEqual] 
+            n - 1, \ \(j++\), \[IndentingNewLine]Vd\_\(\(\[LeftDoubleBracket]\
+\)\(j\)\(\[RightDoubleBracket]\)\)\  = \ 
+            2\  + \ h\^2\ q[
+                  Vt\_\(\(\[LeftDoubleBracket]\)\(j\)\(\[RightDoubleBracket]\)\
+\)]; \ \[IndentingNewLine]Vb\_\(\(\[LeftDoubleBracket]\)\(j\)\(\
+\[RightDoubleBracket]\)\) = \(-\ h\^2\)\ r[
+                Vt\_\(\(\[LeftDoubleBracket]\)\(j\)\(\[RightDoubleBracket]\)\)\
+];\ \ ]; \ \[IndentingNewLine]Vb\_\(\(\[LeftDoubleBracket]\)\(1\)\(\
+\[RightDoubleBracket]\)\)\  = \ 
+          Vb\_\(\(\[LeftDoubleBracket]\)\(1\)\(\[RightDoubleBracket]\)\)\  + \
+\ \((1 + 1\/2\ h\ p[
+                      Vt\_\(\(\[LeftDoubleBracket]\)\(1\)\(\
+\[RightDoubleBracket]\)\)])\)\ \[Alpha]; \ \[IndentingNewLine]Vb\_\(\(\
+\[LeftDoubleBracket]\)\(n - 1\)\(\[RightDoubleBracket]\)\)\  = \ 
+          Vb\_\(\(\[LeftDoubleBracket]\)\(n - 1\)\(\[RightDoubleBracket]\)\)\ \
+ + \ \((1 - 1\/2\ h\ p[
+                      Vt\_\(\(\[LeftDoubleBracket]\)\(n - 1\)\(\
+\[RightDoubleBracket]\)\)])\)\ \[Beta]; \ \[IndentingNewLine]For[\ j = 1, \ 
+          j \[LessEqual] 
+            n - 2, \ \(j++\), \[IndentingNewLine]Va\_\(\(\[LeftDoubleBracket]\
+\)\(j\)\(\[RightDoubleBracket]\)\)\  = \ \(-1\)\  - \ 
+              1\/2\ h\ p[
+                  Vt\_\(\(\[LeftDoubleBracket]\)\(j + 1\)\(\
+\[RightDoubleBracket]\)\)]; \[IndentingNewLine]Vc\_\(\(\[LeftDoubleBracket]\)\
+\(j\)\(\[RightDoubleBracket]\)\)\  = \ \(-1\)\  + \ 
+              1\/2\ h\ p[
+                  Vt\_\(\(\[LeftDoubleBracket]\)\(j\)\(\[RightDoubleBracket]\)\
+\)];\ \ ];\ \ ]\)\(\ \ \)\)\)], "Input",
+  AspectRatioFixed->False],
+
+Cell[BoxData[
+    \(\(\(TriMat[va_, vd_, vc_, vb_, 
+        n_]\)\(:=\)\(\[IndentingNewLine]\)\(Module[{a\  = \ va, b\  = \ vb, 
+          c\  = \ vc, d\  = \ vd, k, x}, \ \[IndentingNewLine]x\  = \ 
+          Table[0, {n - 1}]; \ \[IndentingNewLine]For[\ k = 2, \ 
+          k \[LessEqual] 
+            n - 1, \ \(k++\), \ \
+\[IndentingNewLine]d\_\(\(\[LeftDoubleBracket]\)\(k\)\(\[RightDoubleBracket]\)\
+\)\  = \ d\_\(\(\[LeftDoubleBracket]\)\(k\)\(\[RightDoubleBracket]\)\)\  - \ \
+\ a\_\(\(\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\)\/d\_\(\(\
+\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\)\ \ c\_\(\(\
+\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\); \ \
+\[IndentingNewLine]b\_\(\(\[LeftDoubleBracket]\)\(k\)\(\[RightDoubleBracket]\)\
+\)\  = \ b\_\(\(\[LeftDoubleBracket]\)\(k\)\(\[RightDoubleBracket]\)\)\  - \ \
+\ a\_\(\(\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\)\/d\_\(\(\
+\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\)\ \ b\_\(\(\
+\[LeftDoubleBracket]\)\(k - 1\)\(\[RightDoubleBracket]\)\);\ ]; \ \
+\[IndentingNewLine]x\_\(\(\[LeftDoubleBracket]\)\(n - 1\)\(\
+\[RightDoubleBracket]\)\)\  = \ 
+          b\_\(\(\[LeftDoubleBracket]\)\(n - \
+1\)\(\[RightDoubleBracket]\)\)\/d\_\(\(\[LeftDoubleBracket]\)\(n - 1\)\(\
+\[RightDoubleBracket]\)\); \ \[IndentingNewLine]For[\ k = n - 2, \ 
+          1 \[LessEqual] 
+            k, \ \(k--\), \[IndentingNewLine]x\_\(\(\[LeftDoubleBracket]\)\(k\
+\)\(\[RightDoubleBracket]\)\)\  = \ \(b\_\(\(\[LeftDoubleBracket]\)\(k\)\(\
+\[RightDoubleBracket]\)\)\  - \ c\_\(\(\[LeftDoubleBracket]\)\(k\)\(\
+\[RightDoubleBracket]\)\)\ x\_\(\(\[LeftDoubleBracket]\)\(k + 1\)\(\
+\[RightDoubleBracket]\)\)\)\/d\_\(\(\[LeftDoubleBracket]\)\(k\)\(\
+\[RightDoubleBracket]\)\)\ ]; \ \[IndentingNewLine]Return[
+          x];\ ]\)\(\ \ \)\)\)], "Input",
+  AspectRatioFixed->False],
+
+Cell[BoxData[
+    \(\(\(FineDDE[a0_, b0_, \[Alpha]0_, \[Beta]0_, 
+        n_]\)\(:=\)\(\[IndentingNewLine]\)\(Module[{a = a0, 
+          b = b0, \[Alpha] = \[Alpha]0, \[Beta] = \[Beta]0, 
+          i}, \[IndentingNewLine]CoeffMat[a, b, \[Alpha], \[Beta], 
+          n]; \ \[IndentingNewLine]Xt = 
+          TriMat[Va, Vd, Vc, Vb, n]; \ \[IndentingNewLine]pts = 
+          Transpose[{Vt, Xt}]; \ \ \[IndentingNewLine]pts = 
+          Append[pts, {b, \[Beta]}]; \ \ \[IndentingNewLine]pts = 
+          Prepend[pts, {a, \[Alpha]}]; \ \ \[IndentingNewLine]Return[
+          pts];\ ]\)\(\ \ \)\)\)], "Input",
+  AspectRatioFixed->False],
+
+Cell[TextData[{
+  StyleBox["Example 1.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  Solve  ",
+  Cell[BoxData[
+      RowBox[{" ", 
+        RowBox[{
+          RowBox[{\(x''\), "+", 
+            RowBox[{
+              FractionBox[
+                StyleBox["1",
+                  FontSize->12], 
+                StyleBox["t",
+                  FontSize->12]], " ", \(x'\)}], "+", 
+            RowBox[{
+              RowBox[{"(", 
+                RowBox[{"1", "-", 
+                  FractionBox[
+                    StyleBox["1",
+                      FontSize->12], 
+                    StyleBox[\(4  t\^2\),
+                      FontSize->12]]}], ")"}], "x"}]}], " ", "=", 
+          " ", \(\@t\ cos \((t)\)\)}]}]]],
+  "  over  ",
+  Cell[BoxData[
+      \(\([1, 6]\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      \(x \((1)\) = 1.0\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(x \((6)\) = \(-0.5\)\)]],
+  ".\nUse the finite difference method with 25 subintervals (total of 26 \
+points)."
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 1.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell["Enter the function p(t), q(t) and r(t).  ", "Text"],
+
+Cell[BoxData[{
+    \(\(p[t_] = \(-\ \(1\/t\)\);\)\ \), "\n", 
+    \(\(q[t_] = \(-\ \((1\  - \ 1\/\(4\ t\^2\))\)\);\)\ \), "\n", 
+    \(\(r[t_] = \@t\ Cos[t];\)\ \), "\[IndentingNewLine]", 
+    \(\(a = 1.0;\)\ \), "\[IndentingNewLine]", 
+    \(\(b = 6.0;\)\ \), "\[IndentingNewLine]", 
+    \(\(\[Alpha]\ \  = \ 1.0;\)\ \), "\[IndentingNewLine]", 
+    \(\(\[Beta]\ \  = \ \(-0.5\);\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The D. E. we wish to solve is\>"];\)\ \), "\
+\[IndentingNewLine]", 
+    \(\(Print["\<x'' + (\>", \(-p[t]\), "\<)x' + (\>", \(-q[
+            t]\), "\<)x = \>", r[t]];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<with x(\>", 
+        a, "\<) = \[Alpha] = \>", \[Alpha]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\< and x(\>", 
+        b, "\<) = \[Beta] = \>", \[Beta]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<over the interval [\>", a, "\<, \>", 
+        b, "\<]\>"];\)\ \)}], "Input"],
+
+Cell["Construct the vectors for the tri-diagonal system. ", "Text"],
+
+Cell[BoxData[
+    \(CoeffMat[1.0, 6.0, 1.0, \(-0.5\), 25]\)], "Input"],
+
+Cell["\<\
+If you are curious, you can check out the values. 
+Remember. The tridiagonal system is used to solve for the points that lie \
+strictly inside in the interval. 
+Also, the vectors are used for the mesh points, the three diagonals in the \
+matrix and the column vector. \
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(Print["\<\n\>", "\<Vt = \>", Vt];\)\ \ \), "\n", 
+    \(\(Print["\<\n\>", "\<Va = \>", Va];\)\ \ \), "\n", 
+    \(\(Print["\<\n\>", "\<Vc = \>", Vc];\)\ \ \), "\n", 
+    \(\(Print["\<\n\>", "\<Vd = \>", Vd];\)\ \ \), "\n", 
+    \(\(Print["\<\n\>", "\<Vb = \>", Vb];\)\ \ \)}], "Input"],
+
+Cell["\<\
+Now solve the tri-diagonal system for the ordinates that are strictly inside \
+the interval.  \
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(Xt = TriMat[Va, Vd, Vc, Vb, 25];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<\n\>", "\<Vt = \>", Vt];\)\ \ \), "\[IndentingNewLine]", 
+    \(\(Print["\<\n\>", "\<Xt = \>", Xt];\)\ \ \)}], "Input"],
+
+Cell["We need to put the vectors together to form points. ", "Text"],
+
+Cell[BoxData[{
+    \(\(pts = Transpose[{Vt, Xt}];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<\n\>", "\<points = \>", pts];\)\ \ \)}], "Input"],
+
+Cell["\<\
+We need to  append the first and last boundary points to the list. \
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(pts = Append[pts, {6, \(-0.5\)}];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<\n\>", "\<points = \>", pts];\)\ \ \)}], "Input"],
+
+Cell[BoxData[{
+    \(\(pts = Prepend[pts, {1.0, 1.0}];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<\n\>", "\<points = \>", pts];\)\ \ \)}], "Input"],
+
+Cell["Now we have the solution.", "Text"],
+
+Cell[BoxData[{
+    \(\(Needs["\<Graphics`Colors`\>"];\)\ \ \), "\[IndentingNewLine]", 
+    \(\(ListPlot[pts, PlotJoined \[Rule] True, 
+        PlotRange \[Rule] {{1.0, 6.2}, {\(-3.2\), 1.2}}, 
+        PlotStyle \[Rule] Magenta, 
+        Ticks \[Rule] {Range[1, 6, 1], Range[\(-3\), 2, 1]}, 
+        AxesLabel \[Rule] {"\<t\>", "\<x\>"}];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The solution to\>"];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x'' + (\>", \(-p[t]\), "\<)x' + (\>", \(-q[
+            t]\), "\<)x = \>", r[t]];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", 
+        a, "\<) = \>", \[Alpha]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", b, "\<) = \>", \[Beta]];\)\ \)}], "Input"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Example 2.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  Solve  ",
+  Cell[BoxData[
+      RowBox[{" ", 
+        RowBox[{
+          RowBox[{\(x''\), "+", 
+            RowBox[{
+              FractionBox[
+                StyleBox["1",
+                  FontSize->12], 
+                StyleBox["t",
+                  FontSize->12]], " ", \(x'\)}], "+", 
+            RowBox[{
+              RowBox[{"(", 
+                RowBox[{"1", "-", 
+                  FractionBox[
+                    StyleBox["1",
+                      FontSize->12], 
+                    StyleBox[\(4  t\^2\),
+                      FontSize->12]]}], ")"}], "x"}]}], " ", "=", 
+          " ", \(\@t\ cos \((t)\)\)}]}]]],
+  "  over  ",
+  Cell[BoxData[
+      \(\([1, 6]\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      \(x \((1)\) = 1.0\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(x \((6)\) = \(-0.5\)\)]],
+  ".\nUse the finite difference method with 25 subintervals (total of 26 \
+points).\nJust use the subroutine and skip all the details."
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 2.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell[BoxData[{
+    \(\(p[t_] = \(-\(1\/t\)\);\)\ \), "\n", 
+    \(\(q[t_] = \(-\((1 - 1\/\(4\ t\^2\))\)\);\)\ \), "\n", 
+    \(\(r[t_] = \@t\ Cos[t];\)\ \), "\[IndentingNewLine]", 
+    \(\(points1 = FineDDE[1.0, 6.0, 1.0, \(-0.5\), 25];\)\ \), "\n", 
+    \(\(Needs["\<Graphics`Colors`\>"];\)\ \ \), "\[IndentingNewLine]", 
+    \(\(ListPlot[points1, PlotJoined \[Rule] True, 
+        PlotRange \[Rule] {{1.0, 6.2}, {\(-3.2\), 1.2}}, 
+        PlotStyle \[Rule] Magenta, 
+        Ticks \[Rule] {Range[1, 6, 1], Range[\(-3\), 2, 1]}, 
+        AxesLabel \[Rule] {"\<t\>", "\<x\>"}];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The solution to\>"];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x'' + (\>", \(-p[t]\), "\<)x' + (\>", \(-q[
+            t]\), "\<)x = \>", r[t]];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", 
+        a, "\<) = \>", \[Alpha]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", 
+        b, "\<) = \>", \[Beta]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method was used with with n = 26 \
+points\>"];\)\)}], "Input",
+  AspectRatioFixed->False]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Example 3.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  Solve  ",
+  Cell[BoxData[
+      RowBox[{" ", 
+        RowBox[{
+          RowBox[{\(x''\), "+", 
+            RowBox[{
+              FractionBox[
+                StyleBox["1",
+                  FontSize->12], 
+                StyleBox["t",
+                  FontSize->12]], " ", \(x'\)}], "+", 
+            RowBox[{
+              RowBox[{"(", 
+                RowBox[{"1", "-", 
+                  FractionBox[
+                    StyleBox["1",
+                      FontSize->12], 
+                    StyleBox[\(4  t\^2\),
+                      FontSize->12]]}], ")"}], "x"}]}], " ", "=", 
+          " ", \(\@t\ cos \((t)\)\)}]}]]],
+  "  over  ",
+  Cell[BoxData[
+      \(\([1, 6]\)\)]],
+  "  with  ",
+  Cell[BoxData[
+      \(x \((1)\) = 1.0\)]],
+  "  and  ",
+  Cell[BoxData[
+      \(x \((6)\) = \(-0.5\)\)]],
+  ".\nUse the finite difference method with 50 subintervals (total of 51 \
+points).\nJust use the subroutine and skip all the details."
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 3.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell[BoxData[{
+    \(\(p[t_] = \(-\(1\/t\)\);\)\ \), "\n", 
+    \(q[t_] = \(-\((1 - 1\/\(4\ t\^2\))\)\); \ \), "\n", 
+    \(\(r[t_] = \@t\ Cos[t];\)\ \), "\n", 
+    \(\(points2 = FineDDE[1.0, 6.0, 1.0, \(-0.5\), 50];\)\ \), "\n", 
+    \(Needs["\<Graphics`Colors`\>"]; \ \ \), "\n", 
+    \(ListPlot[points2, PlotJoined \[Rule] True, 
+      PlotRange \[Rule] {{1.0, 6.2}, {\(-3.2\), 1.2}}, 
+      PlotStyle \[Rule] Magenta, 
+      Ticks \[Rule] {Range[1, 6, 1], Range[\(-3\), 2, 1]}, 
+      AxesLabel \[Rule] {"\<t\>", "\<x\>"}]; \ \), "\n", 
+    \(Print["\<The solution to\>"]; \ \), "\n", 
+    \(Print["\<x'' + (\>", \(-p[t]\), "\<)x' + (\>", \(-q[t]\), "\<)x = \>", 
+      r[t]]; \), "\n", 
+    \(Print["\<x(\>", a, "\<) = \>", \[Alpha]]; \ \), "\n", 
+    \(\(Print["\<x(\>", 
+        b, "\<) = \>", \[Beta]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method was used with with n = 51 \
+points\>"];\)\)}], "Input",
+  AspectRatioFixed->False]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Example 4.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  Determine how much the solutions in example 2 and 3 differ. "
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 4.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell["\<\
+We cannot merely form the difference between the solutions, because they do \
+not have the same dimension.  \
+\>", "Text"],
+
+Cell[BoxData[
+    \(points2 - points1\)], "Input"],
+
+Cell["\<\
+We will need to extract every other point from points2 and make a list which \
+contains the same length as points1.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(Length[points1]\), "\[IndentingNewLine]", 
+    \(Length[points2]\)}], "Input"],
+
+Cell[BoxData[
+    \(Range[1, 51, 2]\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(X2\)\(=\)\(\(Transpose[
+            points2\_\(\(\[LeftDoubleBracket]\)\(Range[1, 51, 2]\)\(\
+\[RightDoubleBracket]\)\)]\)\_\(\(\[LeftDoubleBracket]\)\(2\)\(\
+\[RightDoubleBracket]\)\)\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(X1\)\(=\)\(\(Transpose[
+            points1]\)\_\(\(\[LeftDoubleBracket]\)\(2\)\(\[RightDoubleBracket]\
+\)\)\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(T1 = \(Transpose[points1]\)\_\(\(\[LeftDoubleBracket]\)\(1\)\(\
+\[RightDoubleBracket]\)\);\)\ \ \), "\[IndentingNewLine]", 
+    \(error = Transpose[{T1, X2 - X1}]\ \)}], "Input"],
+
+Cell[BoxData[{
+    \(\(Needs["\<Graphics`Colors`\>"];\)\ \ \), "\[IndentingNewLine]", 
+    \(\(ListPlot[error, PlotJoined \[Rule] True, PlotStyle \[Rule] Green, 
+        AxesLabel \[Rule] {"\<t\>", "\<error\>"}, 
+        PlotRange \[Rule] {{1.0, 6.2}, All}];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<The difference between the solutions when\>"];\)\), "\
+\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method was used with with n = 26 \
+points\>"];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method was used with with n = 51 \
+points\>"];\)\)}], "Input"],
+
+Cell["\<\
+\tDoes the error look small? Large? Can it be improved?
+
+\tWe now use Richardson's improvement scheme and extrapolate the seemingly \
+inaccurate solutions in examples 2 and 3.
+We should discover the joy of understanding the order of a numerical method.  \
+\
+\>", "Text"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Example 5.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  Use Richardson's extrapolation and the results of example 2 and 3 to \
+construct a more accurate solution for 25 subintervals."
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 5.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell[TextData[{
+  "Since the version of the finite difference method we are using is known to \
+be of order  ",
+  Cell[BoxData[
+      RowBox[{
+        StyleBox["O",
+          FontWeight->"Bold",
+          FontSlant->"Italic"], \((h\^2)\)}]]],
+  ", we use the following extrapolation formula."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(\(X3\)\(=\)\(\(4\ X2 - X1\)\/3\)\(\ \ \)\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(pointsRE\)\(=\)\(\ \)\(Transpose[{T1, X3}]\)\(\ \ \)\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(Needs["\<Graphics`Colors`\>"];\)\ \ \), "\[IndentingNewLine]", 
+    \(\(ListPlot[pointsRE, PlotJoined \[Rule] True, 
+        PlotRange \[Rule] {{1.0, 6.2}, {\(-3.2\), 1.2}}, 
+        PlotStyle \[Rule] Magenta, 
+        Ticks \[Rule] {Range[1, 6, 1], Range[\(-3\), 2, 1]}, 
+        AxesLabel \[Rule] {"\<t\>", "\<x\>"}];\)\ \ \ \), \
+"\[IndentingNewLine]", 
+    \(\(Print["\<The solution to\>"];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x'' + (\>", \(-p[t]\), "\<)x' + (\>", \(-q[
+            t]\), "\<)x = \>", r[t]];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", 
+        a, "\<) = \>", \[Alpha]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<x(\>", 
+        b, "\<) = \>", \[Beta]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<The extrapolated solution.\>"];\)\), "\[IndentingNewLine]", 
+    \(\(Print[\*"\"\<Using the linear combination X3 = \!\(\(4  X2 - \
+X1\)\/3\) of\>\""];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method used with with n = 26 \
+points\>"];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<The finite difference method used with with n = 51 \
+points\>"];\)\)}], "Input"]
+}, Closed]],
+
+Cell[TextData[{
+  StyleBox["Example 6.",
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  How good did it get?"
+}], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Solution 6.",
+  FontWeight->"Bold",
+  FontColor->RGBColor[1, 0, 1]]], "Text",
+  Evaluatable->False,
+  AspectRatioFixed->False],
+
+Cell["\<\
+Since all the graphs\"look alike\", we will need to \"trust\" that the \
+analytic solution is known to be:\
+\>", "Text"],
+
+Cell[BoxData[
+    \(f[t_] = \ \(0.05887134515528859\ Cos[t]\)\/\@t + 
+        1\/4\ \@t\ Cos[
+            t] + \(0.7400710957802064\ Sin[t]\)\/\@t + \(\(1\/4\)\(\ \
+\)\(t\^\(3/2\)\)\(\ \)\(Sin[t]\)\(\ \ \)\)\)], "Input"],
+
+Cell[BoxData[{
+    \(\(Print["\<Error in the finite difference method used with with n = 26 \
+points\>"];\)\), "\[IndentingNewLine]", 
+    \(\(\(X1\)\(-\)\(f[T1]\)\(\ \ \)\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(Print["\<Error in the finite difference method used with with n = 51 \
+points\>"];\)\), "\[IndentingNewLine]", 
+    \(\(\(X2\)\(-\)\(f[T1]\)\(\ \ \)\)\)}], "Input"],
+
+Cell[BoxData[{
+    \(\(Print[\*"\"\<Error in the extrapolated solution X3 = \!\(\(4  X2 - X1\
+\)\/3\)\>\""];\)\), "\[IndentingNewLine]", 
+    \(X3 - f[T1]\ \ \)}], "Input"],
+
+Cell[BoxData[{
+    \(\(Print["\<         Error using 26 points  \>", 
+        Max[Abs[X1 - f[T1]\ \ ]]];\)\), "\[IndentingNewLine]", 
+    \(\(Print["\<         Error using 51 points  \>", 
+        Max[Abs[X2 - f[T1]\ \ ]]];\)\ \), "\[IndentingNewLine]", 
+    \(\(Print["\<Error in extrapolated solution  \>", 
+        Max[Abs[X3 - f[T1]\ \ ]]];\)\ \ \)}], "Input"],
+
+Cell[TextData[{
+  "Observe that the error for 50 subintervals is very close to ",
+  Cell[BoxData[
+      \(1\/4\)]],
+  " of the error for 25 subintervals.  "
+}], "Text"],
+
+Cell[BoxData[
+    \(\(\(Max[Abs[X2 - f[T1]\ \ ]]\ \ /
+      Max[Abs[X1 - f[T1]\ \ ]]\)\(\ \ \)\)\)], "Input"],
+
+Cell[TextData[{
+  "Since the version of the finite difference method we are using is known to \
+be of order  ",
+  Cell[BoxData[
+      RowBox[{
+        StyleBox["O",
+          FontWeight->"Bold",
+          FontSlant->"Italic"], \((h\^2)\)}]]],
+  ", we expect this to happen.  \n\nWhen extrapolation is used in a method of \
+order ",
+  Cell[BoxData[
+      RowBox[{
+        StyleBox["O",
+          FontWeight->"Bold",
+          FontSlant->"Italic"], \((h\^2)\)}]]],
+  ", a formula like ",
+  Cell[BoxData[
+      \(X3 = \(4\ X2 - \ X1\)\/3\)]],
+  " is used.  \n\nExtrapolation works ! "
+}], "Text"]
+}, Closed]],
+
+Cell[TextData[StyleBox["Research Experience for Undergraduates",
+  FontSize->14,
+  FontWeight->"Bold",
+  FontColor->RGBColor[0.500008, 0, 0.996109]]], "Text"],
+
+Cell[TextData[{
+  StyleBox[ButtonBox["Finite Difference Method for O.D.E.'s",
+    ButtonData:>{
+      URL[ 
+      "http://www.ecs.fullerton.edu/~mathews/n2003/FiniteDifferenceBib.html"],
+       None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold",
+    FontColor->RGBColor[1, 0, 0]],
+  "  ",
+  StyleBox[ButtonBox["Finite Difference Method for O.D.E.'s",
+    ButtonData:>{
+      URL[ 
+      "http://math.fullerton.edu/mathews/n2003/FiniteDifferenceBib.html"], 
+      None},
+    ButtonStyle->"Hyperlink"],
+    FontWeight->"Bold"],
+  "  Internet hyperlinks to web sites and a bibliography of articles.  "
+}], "Text"]
+},
+FrontEndVersion->"4.1 for Microsoft Windows",
+ScreenRectangle->{{0, 1280}, {0, 935}},
+AutoGeneratedPackage->None,
+CellGrouping->Manual,
+WindowSize->{1253, 811},
+WindowMargins->{{Automatic, -1}, {Automatic, 3}},
+PrintingCopies->1,
+PrintingPageRange->{Automatic, Automatic}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1727, 52, 211, 5, 35, "Text"],
+Cell[1941, 59, 1464, 49, 99, "Text"]
+}, Closed]],
+Cell[3420, 111, 3598, 116, 276, "Text"],
+Cell[7021, 229, 440, 13, 33, "Text"],
+Cell[7464, 244, 3007, 97, 238, "Text"],
+Cell[10474, 343, 2919, 87, 314, "Text"],
+Cell[13396, 432, 4008, 123, 192, "Text"],
+Cell[17407, 557, 666, 22, 33, "Text"],
+Cell[18076, 581, 1640, 40, 128, "Text"],
+Cell[19719, 623, 652, 21, 33, "Text"],
+Cell[20374, 646, 1907, 58, 130, "Text"],
+Cell[22284, 706, 2206, 40, 363, "Input"],
+Cell[24493, 748, 1871, 30, 292, "Input"],
+Cell[26367, 780, 630, 11, 170, "Input"],
+Cell[27000, 793, 1057, 37, 56, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[28082, 834, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[28235, 840, 57, 0, 33, "Text"],
+Cell[28295, 842, 927, 17, 279, "Input"],
+Cell[29225, 861, 67, 0, 33, "Text"],
+Cell[29295, 863, 70, 1, 30, "Input"],
+Cell[29368, 866, 292, 6, 71, "Text"],
+Cell[29663, 874, 308, 5, 110, "Input"],
+Cell[29974, 881, 118, 3, 33, "Text"],
+Cell[30095, 886, 223, 3, 70, "Input"],
+Cell[30321, 891, 68, 0, 33, "Text"],
+Cell[30392, 893, 147, 2, 50, "Input"],
+Cell[30542, 897, 91, 2, 33, "Text"],
+Cell[30636, 901, 154, 2, 50, "Input"],
+Cell[30793, 905, 152, 2, 50, "Input"],
+Cell[30948, 909, 41, 0, 33, "Text"],
+Cell[30992, 911, 722, 12, 130, "Input"]
+}, Closed]],
+Cell[31729, 926, 1108, 37, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[32862, 967, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[33015, 973, 1113, 20, 259, "Input"]
+}, Closed]],
+Cell[34143, 996, 1108, 37, 72, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[35276, 1037, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[35429, 1043, 970, 19, 259, "Input"]
+}, Closed]],
+Cell[36414, 1065, 226, 7, 30, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[36665, 1076, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[36818, 1082, 132, 3, 33, "Text"],
+Cell[36953, 1087, 50, 1, 30, "Input"],
+Cell[37006, 1090, 139, 3, 33, "Text"],
+Cell[37148, 1095, 99, 2, 50, "Input"],
+Cell[37250, 1099, 48, 1, 30, "Input"],
+Cell[37301, 1102, 231, 4, 33, "Input"],
+Cell[37535, 1108, 155, 3, 31, "Input"],
+Cell[37693, 1113, 201, 3, 51, "Input"],
+Cell[37897, 1118, 599, 10, 110, "Input"],
+Cell[38499, 1130, 280, 7, 90, "Text"]
+}, Closed]],
+Cell[38794, 1140, 292, 8, 30, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[39111, 1152, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[39264, 1158, 304, 9, 33, "Text"],
+Cell[39571, 1169, 77, 1, 42, "Input"],
+Cell[39651, 1172, 91, 1, 30, "Input"],
+Cell[39745, 1175, 1162, 21, 224, "Input"]
+}, Closed]],
+Cell[40922, 1199, 186, 7, 30, "Text",
+  Evaluatable->False],
+
+Cell[CellGroupData[{
+Cell[41133, 1210, 150, 4, 33, "Text",
+  Evaluatable->False],
+Cell[41286, 1216, 130, 3, 33, "Text"],
+Cell[41419, 1221, 220, 4, 48, "Input"],
+Cell[41642, 1227, 187, 3, 50, "Input"],
+Cell[41832, 1232, 187, 3, 50, "Input"],
+Cell[42022, 1237, 172, 3, 63, "Input"],
+Cell[42197, 1242, 364, 6, 70, "Input"],
+Cell[42564, 1250, 168, 5, 36, "Text"],
+Cell[42735, 1257, 109, 2, 30, "Input"],
+Cell[42847, 1261, 593, 19, 112, "Text"]
+}, Closed]],
+Cell[43455, 1283, 158, 3, 32, "Text"],
+Cell[43616, 1288, 620, 18, 33, "Text"]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

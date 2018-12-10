@@ -1,0 +1,233 @@
+(***********************************************************************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used on any computer system with Mathematica 4.0,
+MathReader 4.0, or any compatible application. The data for the notebook 
+starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do one of 
+the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing the 
+word CacheID, otherwise Mathematica-compatible applications may try to 
+use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+***********************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      7615,        182]*)
+(*NotebookOutlinePosition[      8271,        205]*)
+(*  CellTagsIndexPosition[      8227,        201]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(\(\(FDMNL[a_, b_, \[Alpha]_, \[Beta]_, 
+        n_]\)\(:=\)\(Module[{Tol = 
+            100}, \[IndentingNewLine]h = \(b - a\)\/\(n + 1\); \
+\[IndentingNewLine]f[x_, y_, z_, t_] = Input["\<f\>"]; \[IndentingNewLine]m = 
+          Input["\<m\>"]; \[IndentingNewLine]T = 
+          Input["\<tol\>"]; \[IndentingNewLine]w[
+            0] = \[Alpha]; \[IndentingNewLine]w[
+            n + 1] = \[Beta]; \[IndentingNewLine]For[i = 1, 
+          i \[LessEqual] n, \(i++\), 
+          w[i] = Input["\<w\>"]]; \[IndentingNewLine]For[i = 1, 
+          i \[LessEqual] n, \(i++\), 
+          xx[i_] := a + i*h; \[IndentingNewLine]\ \ \ For[j = 1, 
+            j \[LessEqual] n, \(j++\), \[IndentingNewLine]If[\ i == j, 
+              s[i, j] = 2, 
+              If[i == j - 1 || i == j + 1, s[i, j] = \(-1\), 
+                s[i, j] = 
+                  0]\ ]\[IndentingNewLine]\ \ \ \ ]\[IndentingNewLine]]; \
+\[IndentingNewLine]s1 = 
+          Table[s[i, j], {i, 1, n}, {j, 1, n}]; \[IndentingNewLine]For[j = 2, 
+          j \[LessEqual] m && 
+            Tol \[GreaterEqual] T, \(j++\), \[IndentingNewLine]For[i = 1, 
+            i \[LessEqual] n, \(i++\), 
+            If[\ i == 1, \ \ r[
+                  i] = \(-h\^2\)*
+                    f[xx[i], w[i], w[i - 1], w[i + 1]] + \[Alpha], 
+              If[i == n, \ \ r[
+                    i] = \(-h\^2\)*
+                      f[xx[i], w[i], w[i - 1], w[i + 1]] + \[Beta], 
+                r[i] = \(-h\^2\)*f[xx[i], w[i], w[i - 1], w[i + 1]]]\ ]]; 
+          s2 = Table[r[i], {i, 1, n}]; \[IndentingNewLine]s3 = 
+            LinearSolve[s1, 
+              s2]; \[IndentingNewLine]g = \(-1\); \[IndentingNewLine]For[
+            i = 1, i \[LessEqual] n, \(i++\), 
+            If[Abs[w[i] - s3[\([i]\)]]\  > g, 
+              g = Abs[w[i] - s3[\([i]\)]\ ]\ ]; \ 
+            w[i] = s3[\([i]\)]]; \[IndentingNewLine]Tol = 
+            g\[IndentingNewLine]]; \[IndentingNewLine]\[IndentingNewLine]If[
+          Tol \[LessEqual] T, 
+          For[i = 1, i \[LessEqual] n, \(i++\), 
+            Print[SetAccuracy[xx[i], 4], "\<  \>", SetAccuracy[w[i], 10]]], 
+          Print["\<Failed\>"]]\[IndentingNewLine]]\)\(\[IndentingNewLine]\)\)\
+\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FDMNL[1, 3, 17, 43/3, 3]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\(1.5`4.1761\[InvisibleSpace]"  \
+"\[InvisibleSpace]12.850523205195009358831014`11.1089\),
+      SequenceForm[ 1.5`4.1761, "  ", 12.850523205`11.1089],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(2.`4.301\[InvisibleSpace]"  \
+"\[InvisibleSpace]11.943028489158837899994039`11.0771\),
+      SequenceForm[ 2.`4.301, "  ", 11.943028489`11.0771],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(2.5`4.3979\[InvisibleSpace]"  \
+"\[InvisibleSpace]12.621386684514064129337352`11.1011\),
+      SequenceForm[ 2.5`4.3979, "  ", 12.621386685`11.1011],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(\(FDMSNL[a_, b_, \[Alpha]_, \[Beta]_, 
+        n_]\)\(:=\)\(Module[{Tol = 
+            100}, \[IndentingNewLine]h = \(b - a\)\/\(n + 1\); \
+\[IndentingNewLine]k[u_] = Input["\<k\>"]; \[IndentingNewLine]q[x_] = 
+          Input["\<q\>"]; \[IndentingNewLine]m = 
+          Input["\<m\>"]; \[IndentingNewLine]T = 
+          Input["\<tol\>"]; \[IndentingNewLine]w[
+            0] = \[Alpha]; \[IndentingNewLine]w[
+            n + 1] = \[Beta]; \[IndentingNewLine]For[i = 1, 
+          i \[LessEqual] n, \(i++\), 
+          w[i] = Input["\<w\>"]]; \[IndentingNewLine]For[p = 1, 
+          p \[LessEqual] m && 
+            Tol \[GreaterEqual] T, \(p++\), \[IndentingNewLine]For[i = 1, 
+            i \[LessEqual] 2*n + 1, \(i++\), 
+            w[i/2] = \((1/2)\)*\((w[Ceiling[i/2]] + 
+                    w[Floor[i/2]])\)]; \[IndentingNewLine]For[i = 1, 
+            i \[LessEqual] n, \(i++\), xx[i_] := a + i*h; 
+            r[i] = \ \(-h\^2\)*q[xx[i]]; \[IndentingNewLine]\ \ \ For[j = 1, 
+              j \[LessEqual] 
+                n, \(j++\), \[IndentingNewLine]\(If[i == j, 
+                  s[i, j] = \(-\((k[w[i - 1/2]] + k[w[i + 1/2]])\)\), 
+                  If[i == j - 1, s[i, j] = k[w[i + 1/2]], 
+                    If[i == j + 1, s[i, j] = k[w[i - 1/2]], 
+                      s[i, j] = 
+                        0]]];\)\[IndentingNewLine]]\[IndentingNewLine]]; \
+\[IndentingNewLine]s1 = 
+            Table[s[i, j], {i, 1, n}, {j, 1, n}]; \[IndentingNewLine]s2 = 
+            Table[r[i], {i, 1, n}]; \[IndentingNewLine]s3 = 
+            LinearSolve[s1, 
+              s2]; \[IndentingNewLine]g = \(-1\); \[IndentingNewLine]For[
+            i = 1, i \[LessEqual] n, \(i++\), 
+            If[Abs[w[i] - s3[\([i]\)]]\  > g, 
+              g = Abs[w[i] - s3[\([i]\)]\ ]\ ]; \ 
+            w[i] = s3[\([i]\)]]; \[IndentingNewLine]Tol = 
+            g\[IndentingNewLine]]; \[IndentingNewLine]If[Tol \[LessEqual] T, 
+          For[i = 1, i \[LessEqual] n, \(i++\), 
+            Print[SetAccuracy[xx[i], 4], "\<  \>", SetAccuracy[w[i], 10]]], 
+          Print["\<Failed\>"]]\[IndentingNewLine]]\)\(\[IndentingNewLine]\)\)\
+\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FDMSNL[0, 1, 0, 0, 3]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.25`3.3979\[InvisibleSpace]"  \
+"\[InvisibleSpace]0.383279468339400852805454`9.5835\),
+      SequenceForm[ 0.25`3.3979, "  ", 0.383279468`9.5835],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.5`3.699\[InvisibleSpace]"  \
+"\[InvisibleSpace]0.606600785137212050734945`9.7829\),
+      SequenceForm[ 0.5`3.699, "  ", 0.606600785`9.7829],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.75`3.8751\[InvisibleSpace]"  \
+"\[InvisibleSpace]0.532686481808355982714431`9.7265\),
+      SequenceForm[ 0.75`3.8751, "  ", 0.532686482`9.7265],
+      Editable->False]], "Print"]
+}, Open  ]]
+},
+FrontEndVersion->"4.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowSize->{495, 561},
+WindowMargins->{{120, Automatic}, {Automatic, 30}}
+]
+
+
+(***********************************************************************
+Cached data follows.  If you edit this Notebook file directly, not using
+Mathematica, you must remove the line containing CacheID at the top of 
+the file.  The cache data will then be recreated when you save this file 
+from within Mathematica.
+***********************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1717, 49, 2214, 42, 752, "Input"],
+
+Cell[CellGroupData[{
+Cell[3956, 95, 57, 1, 30, "Input"],
+Cell[4016, 98, 221, 4, 25, "Print"],
+Cell[4240, 104, 217, 4, 25, "Print"],
+Cell[4460, 110, 221, 4, 25, "Print"]
+}, Open  ]],
+Cell[4696, 117, 2162, 39, 710, "Input"],
+
+Cell[CellGroupData[{
+Cell[6883, 160, 54, 1, 30, "Input"],
+Cell[6940, 163, 219, 4, 25, "Print"],
+Cell[7162, 169, 215, 4, 25, "Print"],
+Cell[7380, 175, 219, 4, 25, "Print"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+
+(***********************************************************************
+End of Mathematica Notebook file.
+***********************************************************************)
+

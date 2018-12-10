@@ -1,0 +1,209 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      6067,        160]*)
+(*NotebookOutlinePosition[      6714,        182]*)
+(*  CellTagsIndexPosition[      6670,        178]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(Exit[]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\(\[IndentingNewLine]\)\(FDMHP[l_, m_, T_, n_, \[Alpha]_] := 
+      Block[{}, 
+        js = 0; \[IndentingNewLine]h = l/m; \[IndentingNewLine]k = 
+          T/n; \[IndentingNewLine]\[Lambda] = \((k*\[Alpha])\)/
+            h; \[IndentingNewLine]f[x_] := 
+          Sin[\[Pi]*x]; \[IndentingNewLine]g[x_] := 
+          0; \[IndentingNewLine]For[j = 1, 
+            j \[LessEqual] n, \(j++\), \[IndentingNewLine]w[0, j] = 
+              0; \[IndentingNewLine]w[m, j] = 
+              0;\[IndentingNewLine]]\[IndentingNewLine]\(w[0, 0] = 
+            f[0]\); \[IndentingNewLine]w[m, 0] = f[l]; \[IndentingNewLine]For[
+          i = 1, i \[LessEqual] m - 1, \(i++\), \[IndentingNewLine]w[i, 0] = 
+            f[i*h]; \[IndentingNewLine]w[i, 
+              1] = \((1 - \[Lambda]\^2)\)*f[i*h] + \[Lambda]\^2\/2*
+                f[\((i + 1)\)*h] + f[\((i - 1)\)*h] + 
+              k*g[i*h]]; \[IndentingNewLine]For[j = 1, 
+          j \[LessEqual] n - 1, \(j++\), \[IndentingNewLine]For[i = 1, 
+            i \[LessEqual] m - 1, \(i++\), \[IndentingNewLine]w[i, j + 1] = 
+              2*\((1 - \[Lambda]\^2)\)*
+                  w[i, j] + \[Lambda]\^2*\((w[i + 1, j] + w[i - 1, j])\) + 
+                w[i, j - 1]]]; \[IndentingNewLine]For[j = 0, 
+          j < 1, \(j++\), \[IndentingNewLine]t = j*k; \[IndentingNewLine]For[
+            i = 0, i \[LessEqual] m, \(i++\), \[IndentingNewLine]x = 
+              i*h; \[IndentingNewLine]Print[N[x], "\<      \>", 
+              SetAccuracy[w[i, j], 
+                10]]]];\[IndentingNewLine]]\[IndentingNewLine]
+    FDMHP[1, 10, 1, 20, 2]\)\)\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.`\[InvisibleSpace]"      "\[InvisibleSpace]0``10. \
+\),
+      SequenceForm[ 0.0, "      ", 0``10.],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.1`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.3090169943749474241022934172`9.301906530752618\),
+      SequenceForm[ .10000000000000001, "      ", 
+        0.309016994`9.301906530752618],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.2`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.5877852522924731291681480988`9.440588843363093\),
+      SequenceForm[ .20000000000000001, "      ", 
+        0.587785252`9.440588843363093],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.3`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.8090169943749474241`9.358712805743004\),
+      SequenceForm[ .29999999999999999, "      ", 
+        0.809016994`9.358712805743004],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.4`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.9510565162951535721`9.510808305165224\),
+      SequenceForm[ .40000000000000002, "      ", 
+        0.951056516`9.510808305165224],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.5`\[InvisibleSpace]"      "\[InvisibleSpace]1.`10. \
+\),
+      SequenceForm[ .5, "      ", 1.`10.],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.6`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.9510565162951535721`9.510808305165224\),
+      SequenceForm[ .59999999999999998, "      ", 
+        0.951056516`9.510808305165224],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.7`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.8090169943749474241`9.358712805743004\),
+      SequenceForm[ .69999999999999996, "      ", 
+        0.809016994`9.358712805743004],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.8`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.5877852522924731291681480988`9.440588843363093\),
+      SequenceForm[ .80000000000000004, "      ", 
+        0.587785252`9.440588843363093],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(0.9`\[InvisibleSpace]"      \
+"\[InvisibleSpace]0.3090169943749474241022934172`9.301906530752618\),
+      SequenceForm[ .90000000000000002, "      ", 
+        0.309016994`9.301906530752618],
+      Editable->False]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\(1.`\[InvisibleSpace]"      "\[InvisibleSpace]0``10. \
+\),
+      SequenceForm[ 1.0, "      ", 0``10.],
+      Editable->False]], "Print"]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1360}, {0, 685}},
+WindowSize->{1068, 527},
+WindowMargins->{{Automatic, 85}, {Automatic, -31}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 39, 1, 30, "Input"],
+
+Cell[CellGroupData[{
+Cell[1818, 56, 1621, 27, 553, "Input"],
+Cell[3442, 85, 173, 4, 25, "Print"],
+Cell[3618, 91, 262, 5, 25, "Print"],
+Cell[3883, 98, 262, 5, 25, "Print"],
+Cell[4148, 105, 253, 5, 25, "Print"],
+Cell[4404, 112, 253, 5, 25, "Print"],
+Cell[4660, 119, 173, 4, 25, "Print"],
+Cell[4836, 125, 253, 5, 25, "Print"],
+Cell[5092, 132, 253, 5, 25, "Print"],
+Cell[5348, 139, 262, 5, 25, "Print"],
+Cell[5613, 146, 262, 5, 25, "Print"],
+Cell[5878, 153, 173, 4, 25, "Print"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
